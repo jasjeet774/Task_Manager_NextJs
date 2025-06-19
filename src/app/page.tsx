@@ -6,6 +6,11 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [tasks, setTasks] = useState<string[]>([]);
+  const editTask = (index: number, updatedValue: string) => {
+  setTasks((prev) =>
+    prev.map((task, i) => (i === index ? updatedValue : task))
+  );
+};
 
   // ✅ Load tasks from localStorage on first load
   useEffect(() => {
@@ -28,6 +33,8 @@ export default function Home() {
     setTasks((prev) => prev.filter((_, index) => index !== indexToDelete));
   };
 
+  
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-100 to-indigo-100">
       <Header />
@@ -36,7 +43,12 @@ export default function Home() {
           Manage Your Daily Tasks
         </h2>
         <TaskForm onAddTask={addTask} />
-        <TaskList tasks={tasks} onDeleteTask={deleteTask} />
+        <TaskList
+  tasks={tasks}
+  onDeleteTask={deleteTask}
+  onEditTask={editTask}
+/>
+
       </section>
     </main>
   );
