@@ -11,6 +11,10 @@ export default function Home() {
     setTasks((prev) => [...prev, task]);
   };
 
+  const deleteTask = (indexToDelete: number) => {
+    setTasks((prev) => prev.filter((_, index) => index !== indexToDelete));
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-100 to-indigo-100">
       <Header />
@@ -19,7 +23,7 @@ export default function Home() {
           Manage Your Daily Tasks
         </h2>
         <TaskForm onAddTask={addTask} />
-        <TaskList tasks={tasks} />
+        <TaskList tasks={tasks} onDeleteTask={deleteTask} />
       </section>
     </main>
   );
