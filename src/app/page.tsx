@@ -2,10 +2,23 @@
 import Header from '@/components/Header';
 import TaskForm from '@/components/TaskForm';
 import TaskList from '@/components/TaskList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [tasks, setTasks] = useState<string[]>([]);
+
+  // ✅ Load tasks from localStorage on first load
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
+
+  // ✅ Save tasks to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (task: string) => {
     setTasks((prev) => [...prev, task]);
