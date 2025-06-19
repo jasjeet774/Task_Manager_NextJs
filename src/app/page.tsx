@@ -1,17 +1,25 @@
 'use client';
 import Header from '@/components/Header';
+import TaskForm from '@/components/TaskForm';
+import TaskList from '@/components/TaskList';
+import { useState } from 'react';
 
 export default function Home() {
+  const [tasks, setTasks] = useState<string[]>([]);
+
+  const addTask = (task: string) => {
+    setTasks((prev) => [...prev, task]);
+  };
+
   return (
-    <main className="min-h-screen bg-gray-100">
+    <main className="min-h-screen bg-gradient-to-br from-gray-100 to-indigo-100">
       <Header />
-      <section className="max-w-xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-lg">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Welcome to your personal task manager!
+      <section className="max-w-xl mx-auto mt-10 bg-white p-8 rounded-3xl shadow-2xl">
+        <h2 className="text-3xl font-bold mb-6 text-indigo-700 text-center">
+          Manage Your Daily Tasks
         </h2>
-        <p className="text-gray-600">
-          Start organizing your tasks and stay productive.
-        </p>
+        <TaskForm onAddTask={addTask} />
+        <TaskList tasks={tasks} />
       </section>
     </main>
   );
